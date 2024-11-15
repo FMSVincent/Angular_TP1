@@ -1,0 +1,63 @@
+<div class="container">
+  <h2>Récapitulatif de la Commande</h2>
+  <table class="table table-bordered">
+    <thead class="table-secondary">
+      <tr>
+        <th>Informations du Client</th>
+        <th>Détails de la Commande</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <strong>Nom:</strong> {{ customer.name }}<br />
+          <strong>Prénom:</strong> {{ customer.lastname }}<br /><br />
+          <strong>Adresse:</strong> {{ customer.address }}<br />
+          <strong>Téléphone:</strong> {{ customer.phone }}<br />
+          <strong>Email:</strong> {{ customer.email }}<br />
+        </td>
+        <td>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th><strong>ID</strong></th>
+                <th><strong>NOM</strong></th>
+                <th><strong>QUANTITE</strong></th>
+                <th><strong>PRIX</strong></th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let training of listCarts">
+                <tr>
+                  <td>{{ training.id }}</td>
+                  <td>{{ training.name }}</td>
+                  <td>{{ training.quantity }}</td>
+                  <td>{{ training.price * training.quantity }}</td>
+                </tr>
+              </ng-container>
+              <tr>
+                <td><strong>Total</strong></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <strong>{{ totalPrice }}</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr class="table-secondary">
+        <td>
+          <strong>Numéro de Commande:</strong> 5784<br />
+          <strong>Date:</strong> date
+        </td>
+        <td class="text-center">
+          <button class="btn btn-success" (click)="order()">
+            Confirmer la Commande
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
