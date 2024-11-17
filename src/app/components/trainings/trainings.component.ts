@@ -23,21 +23,21 @@ export class TrainingsComponent implements OnInit {
         name: 'Java',
         description: 'Formation Java SE sur 5 jours',
         price: 1500,
-        quantity: 5,
+        quantity: 1,
       },
       {
         id: 2,
         name: 'DotNet',
         description: 'Formation Dotnet sur 3 jours',
         price: 1000,
-        quantity: 5,
+        quantity: 1,
       },
       {
         id: 3,
         name: 'Python',
         description: 'Formation Python/Django',
         price: 5500,
-        quantity: 5,
+        quantity: 1,
       },
     ];
   }

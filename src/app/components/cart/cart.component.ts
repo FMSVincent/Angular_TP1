@@ -9,30 +9,27 @@ import { CartService } from 'src/app/services/cart.service';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  listCarts: Training[] | undefined;
+  listCarts: Training[] = [];
   totalPrice: number | undefined;
 
   constructor(private carteServices: CartService, private router: Router) {}
 
   ngOnInit(): void {
     this.listCarts = this.carteServices.getTrainingCart();
-    this.getTotalPrice();
-  }
+    console.log(this.listCarts);
 
-  getCart() {
-    this.listCarts = this.carteServices.getTrainingCart();
-    return this.listCarts && this.listCarts.length > 0 ? false : true;
+    this.getTotalPrice();
   }
 
   deleteCart() {
     this.carteServices.deleteCart();
-    this.getCart();
+    this.listCarts = this.carteServices.getTrainingCart();
     this.getTotalPrice();
   }
 
   deleteItemFromCart(training: Training) {
     this.carteServices.deleteItemFromCart(training);
-    this.getCart();
+    this.listCarts = this.carteServices.getTrainingCart();
     this.getTotalPrice();
   }
 

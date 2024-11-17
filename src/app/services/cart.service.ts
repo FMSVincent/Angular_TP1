@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ToastService } from 'angular-toastify';
 import { Training } from '../interfaces/training.interface';
 
 @Injectable({
@@ -7,7 +8,8 @@ import { Training } from '../interfaces/training.interface';
 export class CartService {
   listCarts: Training[] = [];
   localStorageCartKey: string = 'cart';
-  constructor() {}
+
+  constructor(private _toastService: ToastService) {}
 
   addTrainingToCart(training: Training): void {
     this.listCarts = this.getTrainingCart();
@@ -29,6 +31,7 @@ export class CartService {
       this.localStorageCartKey,
       JSON.stringify(this.listCarts)
     );
+    this._toastService.info(`${training.name} à bien été ajouté`);
   }
 
   getTrainingCart(): Training[] {
@@ -46,6 +49,7 @@ export class CartService {
       return item.id !== training.id;
     });
     localStorage.setItem(this.localStorageCartKey, JSON.stringify(newCart));
+    this._toastService.warn(`${training.name} à bien été supprimé`);
   }
 
   deleteCart() {

@@ -1,7 +1,7 @@
-<ng-container *ngIf="getCart()">
+<div *ngIf="listCarts.length === 0">
   <p>Panier vide</p>
-</ng-container>
-<ng-container *ngIf="!getCart()">
+</div>
+<div *ngIf="listCarts && listCarts.length > 0">
   <button class="btn btn-secondary" (click)="deleteCart()">
     Vider le panier
   </button>
@@ -37,4 +37,4 @@
   <button type="button" class="btn btn-info" (click)="order()">
     Commander
   </button>
-</ng-container>
+</div>
