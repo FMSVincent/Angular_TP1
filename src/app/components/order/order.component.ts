@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Customer } from 'src/app/models/customer';
-import { Training } from 'src/app/models/training';
+import { Customer } from 'src/app/interfaces/customer.interface';
+import { Training } from 'src/app/interfaces/training.interface';
 import { CartService } from 'src/app/services/cart.service';
 import { CustomerService } from 'src/app/services/customer.service';
 

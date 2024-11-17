@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Training } from '../models/training';
+import { Training } from '../interfaces/training.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -9,25 +9,32 @@ export class CartService {
   localStorageCartKey: string = 'cart';
   constructor() {}
 
-  addTrainingToCart(training: Training) {
-    if (localStorage.getItem('cart')) {
-      let localStorageCart = JSON.parse(localStorage.getItem('cart') || '""');
-      localStorageCart.push(training);
-      localStorage.setItem('cart', JSON.stringify(localStorageCart));
+  addTrainingToCart(training: Training): void {
+    this.listCarts = this.getTrainingCart();
+
+    if (this.listCarts.length > 0) {
+      const isExistTrainingIndex = this.listCarts.findIndex(
+        (i) => i.id === training.id
+      );
+
+      if (isExistTrainingIndex !== -1) {
+        this.listCarts[isExistTrainingIndex].quantity += training.quantity;
+      } else {
+        this.listCarts.push(training);
+      }
     } else {
       this.listCarts.push(training);
-      localStorage.setItem('cart', JSON.stringify(this.listCarts));
     }
+    localStorage.setItem(
+      this.localStorageCartKey,
+      JSON.stringify(this.listCarts)
+    );
   }
 
-  getTrainingCart(): Training[] | undefined {
-    if (localStorage.getItem(this.localStorageCartKey)) {
-      let localStorageCart = JSON.parse(
-        localStorage.getItem(this.localStorageCartKey) || '""'
-      );
-      return localStorageCart;
-    }
-    return undefined;
+  getTrainingCart(): Training[] | [] {
+    let storage = localStorage.getItem(this.localStorageCartKey);
+    const cart = storage ? JSON.parse(storage) : [];
+    return cart;
   }
 
   deleteItemFromCart(training: Training) {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Training } from 'src/app/models/training';
+import { Training } from 'src/app/interfaces/training.interface';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({

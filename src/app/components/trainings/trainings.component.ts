@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Training } from 'src/app/models/training';
+import { Training } from 'src/app/interfaces/training.interface';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
