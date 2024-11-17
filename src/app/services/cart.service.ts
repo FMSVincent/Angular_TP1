@@ -31,13 +31,16 @@ export class CartService {
     );
   }
 
-  getTrainingCart(): Training[] | [] {
-    let storage = localStorage.getItem(this.localStorageCartKey);
-    const cart = storage ? JSON.parse(storage) : [];
-    return cart;
+  getTrainingCart(): Training[] {
+    try {
+      const storage: string = localStorage.getItem(this.localStorageCartKey);
+      return storage ? JSON.parse(storage) : [];
+    } catch (error) {
+      return [];
+    }
   }
 
-  deleteItemFromCart(training: Training) {
+  deleteItemFromCart(training: Training): void {
     const trainingsCart = this.getTrainingCart();
     const newCart = trainingsCart?.filter((item) => {
       return item.id !== training.id;
@@ -46,6 +49,6 @@ export class CartService {
   }
 
   deleteCart() {
-    localStorage.clear();
+    localStorage.removeItem(this.localStorageCartKey);
   }
 }
