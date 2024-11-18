@@ -12,6 +12,10 @@ export class CartService {
   constructor(private _toastService: ToastService) {}
 
   addTrainingToCart(training: Training): void {
+    if (training.quantity <= 0) {
+      this._toastService.info(`${training.quantity} doit etre supérieur a 0`);
+      return;
+    }
     this.listCarts = this.getTrainingCart();
 
     if (this.listCarts.length > 0) {
