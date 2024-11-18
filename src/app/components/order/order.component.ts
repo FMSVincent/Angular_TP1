@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Customer } from 'src/app/interfaces/customer.interface';
 import { Training } from 'src/app/interfaces/training.interface';
 import { CartService } from 'src/app/services/cart.service';
@@ -22,7 +23,8 @@ export class OrderComponent implements OnInit {
 
   constructor(
     private carteServices: CartService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -50,5 +52,7 @@ export class OrderComponent implements OnInit {
 
   order() {
     alert(`Ajourd'hui cest gratuit ! Bon Week-end !`);
+    this.carteServices.deleteCart();
+    this.router.navigateByUrl('/trainings');
   }
 }
