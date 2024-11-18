@@ -30,7 +30,7 @@ export class OrderComponent implements OnInit {
   ngOnInit(): void {
     this.listCarts = this.carteServices.getTrainingCart();
     this.getTotalPrice();
-    this.customer = this.customerService.getCustomer();
+    this.customer = this.customerService.getCustomerStorage();
   }
 
   getCart() {
@@ -53,6 +53,7 @@ export class OrderComponent implements OnInit {
   order() {
     alert(`Ajourd'hui cest gratuit ! Bon Week-end !`);
     this.carteServices.deleteCart();
+    this.customerService.deleteStorageCustomer();
     this.router.navigateByUrl('/trainings');
   }
 }
