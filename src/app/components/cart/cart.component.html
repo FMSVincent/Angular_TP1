@@ -1,40 +1,27 @@
-<ng-container *ngIf="getCart()">
-  <p>Panier vide</p>
-</ng-container>
-<ng-container *ngIf="!getCart()">
-  <button class="btn btn-secondary" (click)="deleteCart()">
-    Vider le panier
-  </button>
-  <table class="table table-striped table-hover">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>NOM</th>
-        <th>QUANTITE</th>
-        <th>PRIX</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let cart of listCarts">
-        <td>{{ cart.id }}</td>
-        <td>{{ cart.name }}</td>
-        <td>{{ cart.quantity }}</td>
-        <td>{{ cart.price * cart.quantity }}</td>
-        <td>
-          <a class="btn btn-danger" (click)="deleteItemFromCart(cart)"
-            >Supprimer</a
-          >
-        </td>
-      </tr>
-      <tr>
-        <td>Total</td>
-        <td></td>
-        <td></td>
-        <td>{{ totalPrice }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <button type="button" class="btn btn-info" (click)="order()">
-    Commander
-  </button>
-</ng-container>
+
+<div class="container">
+  <ng-container *ngIf="cart">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>ID</th><th>Name</th><th>Quantity</th><th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let training of cart">
+              <td>{{training.id}}</td>
+              <td>{{training.name}}</td>
+              <td>{{training.quantity}}</td>
+              <td>{{training.price}}</td>  
+              <td class="col-sm-1"> <a class="btn btn-danger btn-sm" (click)="onRemoveFromCart(training)"> Supprimer </a> </td>
+            </tr>
+
+            <tr>
+              <td colspan="3">Total</td>
+              <td>{{amount}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="btn btn-success" (click)="onNewOrder()">Commander</button>    
+    </ng-container>
+</div>

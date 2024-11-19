@@ -1,57 +1,30 @@
 <div class="container">
-  <div class="col-md-3">
-    <form #f="ngForm" (ngSubmit)="onSaveCustomer(f)">
-      <div class="form-group">
-        <label for="name" class="control-label">Nom: </label>
-        <input
-          type="text"
-          name="name"
-          required
-          class="form-control"
-          [(ngModel)]="customerService.getCustomer().name"
-        />
-      </div>
-      <div class="form-group">
-        <label for="lastname" class="control-label">Prenom: </label>
-        <input
-          type="text"
-          name="lastname"
-          required
-          class="form-control"
-          [(ngModel)]="customerService.getCustomer().lastname"
-        />
-      </div>
-      <div class="form-group">
-        <label for="address" class="control-label">Adresse: </label>
-        <input
-          type="text"
-          name="address"
-          required
-          class="form-control"
-          [(ngModel)]="customerService.getCustomer().address"
-        />
-      </div>
-      <div class="form-group">
-        <label for="email" class="control-label">Email: </label>
-        <input
-          type="text"
-          name="email"
-          required
-          class="form-control"
-          [(ngModel)]="customerService.getCustomer().email"
-        />
-      </div>
-      <div class="form-group">
-        <label for="phone" class="control-label">Phone: </label>
-        <input
-          type="text"
-          name="phone"
-          required
-          class="form-control"
-          [(ngModel)]="customerService.getCustomer().name"
-        />
-      </div>
-      <button type="submit" [disabled]="!f.valid">Envoyer</button>
-    </form>
-  </div>
+    <div class="col-md-3">
+        <form #f="ngForm" (ngSubmit)="onSaveCustomer(f.value)">
+        <div class="form-group">
+            <label class="control-label">Nom : </label>
+            <input type="text" name="name" required class="form-control" [(ngModel)]="customer!.name">
+        </div>
+        <div class="form-group">
+            <label class="control-label">Prénom : </label>
+            <input type="text" name="firstName" class="form-control" [(ngModel)]="customer!.firstName">
+        </div>
+    
+        <div class="form-group">
+            <label class="control-label">Adresse : </label>
+            <input type="text" name="address" class="form-control" [(ngModel)]="customer!.address">
+    
+            <div class="form-group">
+            <label class="control-label">Tel :</label>
+            <input type="text" name="phone" class="form-control" [(ngModel)]="customer!.phone">
+            </div>
+    
+            <div class="form-group">
+            <label class="control-label">Email : </label>
+            <input type="text" name="email" required class="form-control" [(ngModel)]="customer!.email">
+            </div>
+            <button type="submit" [disabled]="!f.valid" class="btn btn-primary">Next</button>
+        </div>
+        </form>
+    </div>
 </div>

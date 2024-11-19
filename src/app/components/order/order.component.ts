@@ -1,54 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { Customer } from 'src/app/models/customer';
-import { Training } from 'src/app/models/training';
+import { Router } from '@angular/router';
+import { Customer } from 'src/app/model/customer.model';
 import { CartService } from 'src/app/services/cart.service';
-import { CustomerService } from 'src/app/services/customer.service';
 
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
-  styleUrls: ['./order.component.scss'],
+  styleUrls: ['./order.component.css']
 })
-export class OrderComponent implements OnInit {
-  listCarts: Training[] | undefined;
-  totalPrice: number | undefined;
-  customer: Customer = {
-    name: '',
-    lastname: '',
-    address: '',
-    phone: '',
-    email: '',
-  };
 
-  constructor(
-    private carteServices: CartService,
-    private customerService: CustomerService
-  ) {}
+/**
+ * Composant de gestion du récapitulatif d'une commande + validation
+ */
+export class OrderComponent implements OnInit {
+  dateOrder : Date = new Date();
+  customer : Customer | undefined;
+  constructor(public cartService : CartService, private router : Router) { }
 
   ngOnInit(): void {
-    this.listCarts = this.carteServices.getTrainingCart();
-    this.getTotalPrice();
-    this.customer = this.customerService.getCustomer();
+    this.customer = this.cartService.getCustomer();
   }
 
-  getCart() {
-    this.listCarts = this.carteServices.getTrainingCart();
-    return this.listCarts && this.listCarts.length > 0 ? false : true;
-  }
-
-  getTotalPrice() {
-    let totalPriceItem = this.listCarts?.map((item) => {
-      return item.quantity * item.price;
-    });
-
-    let initialValue = 0;
-    this.totalPrice = totalPriceItem?.reduce(
-      (accumulator, currentValue) => accumulator + currentValue,
-      initialValue
-    );
-  }
-
-  order() {
-    alert(`Ajourd'hui cest gratuit ! Bon Week-end !`);
+  /**
+   * Méthode appelé en cas de validation d'une commande
+   * si user confirme alors l'appli est remise dans son état initial
+   */
+  onOrder(){
+    if(confirm("Aujourd'hui c'est gratuit, merci de votre visite :)")){
+        this.cartService.sendOrderToLocaleStorage();
+        this.cartService.clearLocalStorage();
+        this.router.navigateByUrl('');
+    }
   }
 }

@@ -1,54 +1,43 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Training } from 'src/app/models/training';
+import { Training } from 'src/app/model/training.model';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss'],
+  styleUrls: ['./cart.component.css']
 })
+
+/**
+ * Composant de gestion d'un panier permettant l'affichage du panier, la suppression éventuelle de formations et le passage à l'étape suivante
+ */
 export class CartComponent implements OnInit {
-  listCarts: Training[] | undefined;
-  totalPrice: number | undefined;
+  cart : Training[] | undefined;
+  amount : number = 0;
+  constructor(private cartService : CartService , private router : Router) { }
 
-  constructor(private carteServices: CartService, private router: Router) {}
-
+  /**
+   * à l'initialisation du composant, récupération des données du panier via le service dédié
+   */
   ngOnInit(): void {
-    this.listCarts = this.carteServices.getTrainingCart();
-    this.getTotalPrice();
+    this.cart = this.cartService.getCart();       
+    this.amount = this.cartService.getAmount();
   }
 
-  getCart() {
-    this.listCarts = this.carteServices.getTrainingCart();
-    return this.listCarts && this.listCarts.length > 0 ? false : true;
+  /**
+   * Méthode qui supprime une formation du panier et met à jour l'affichage du panier
+   * @param training 
+   */
+  onRemoveFromCart(training : Training){
+    this.cartService.removeTraining(training);
+    this.cart = this.cartService.getCart();
   }
 
-  deleteCart() {
-    this.carteServices.deleteCart();
-    this.getCart();
-    this.getTotalPrice();
-  }
-
-  deleteItemFromCart(training: Training) {
-    this.carteServices.deleteItemFromCart(training);
-    this.getCart();
-    this.getTotalPrice();
-  }
-
-  getTotalPrice() {
-    let totalPriceItem = this.listCarts?.map((item) => {
-      return item.quantity * item.price;
-    });
-
-    let initialValue = 0;
-    this.totalPrice = totalPriceItem?.reduce(
-      (accumulator, currentValue) => accumulator + currentValue,
-      initialValue
-    );
-  }
-
-  order() {
-    this.router.navigate(['/customer']);
+  /**
+   * Méthode de gestion de l'étape suivante de la commande en renvoyant vers le composant de gestion client (formulaire)
+   */
+  onNewOrder(){
+    this.router.navigateByUrl('customer');
   }
 }
